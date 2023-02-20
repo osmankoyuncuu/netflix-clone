@@ -1,6 +1,7 @@
 import Banner from "@/component/Banner";
 import Header from "@/component/Header";
 import Row from "@/component/Row";
+import useAuth from "@/hooks/useAuth";
 import requests from "@/utils/request";
 import Head from "next/head";
 import { Movie } from "typings";
@@ -60,10 +61,12 @@ export default function Home({
   romanceMovies,
   documentaries,
 }: Props) {
+  const { loading } = useAuth();
+  if (loading) return null;
   return (
     <div className="relative h-screen bg-gradient-to-b lg:h-[140vh]">
       <Head>
-        <title>Netflix</title>
+        <title>Home-Netflix</title>
         <meta name="description" content="Netflix" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
