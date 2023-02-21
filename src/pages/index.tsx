@@ -5,6 +5,9 @@ import useAuth from "@/hooks/useAuth";
 import requests from "@/utils/request";
 import Head from "next/head";
 import { Movie } from "typings";
+import { useRecoilValue } from "recoil";
+import { modalState } from "@/atoms/modalAtom";
+import Modal from "@/component/ShowModal";
 
 export const getServerSideProps = async () => {
   const [
@@ -62,6 +65,7 @@ export default function Home({
   documentaries,
 }: Props) {
   const { loading } = useAuth();
+  const showModal = useRecoilValue(modalState);
   if (loading) return null;
   return (
     <div className="relative h-screen bg-gradient-to-b lg:h-[140vh]">
@@ -69,6 +73,13 @@ export default function Home({
         <title>Home-Netflix</title>
         <meta name="description" content="Netflix" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+          integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer"
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
@@ -85,7 +96,7 @@ export default function Home({
           <Row title="Romance Movies" movies={romanceMovies} />
           <Row title="Documentaries" movies={documentaries} />
         </section>
-        {/*modal*/}
+        {showModal && <Modal />}
       </main>
     </div>
   );
