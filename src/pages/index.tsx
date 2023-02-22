@@ -8,8 +8,18 @@ import { Movie } from "typings";
 import { useRecoilValue } from "recoil";
 import { modalState } from "@/atoms/modalAtom";
 import Modal from "@/component/ShowModal";
+import Plans from "@/component/Plans";
+import { getProducts, Product } from "@stripe/firestore-stripe-payments";
+import payments from "../lib/stripe";
+import useSubscription from "@/hooks/useSubscription";
 
 export const getServerSideProps = async () => {
+  const products = await getProducts(payments, {
+    includePrices: true,
+    activeOnly: true,
+  })
+    .then((res) => res)
+    .catch((error) => console.log(error.message));
   const [
     netflixOriginals,
     trendingNow,
@@ -40,6 +50,7 @@ export const getServerSideProps = async () => {
       horrorMovies: horrorMovies.results,
       romanceMovies: romanceMovies.results,
       documentaries: documentaries.results,
+      products,
     },
   };
 };
@@ -52,6 +63,7 @@ interface Props {
   horrorMovies: Movie[];
   romanceMovies: Movie[];
   documentaries: Movie[];
+  products: Product[];
 }
 
 export default function Home({
@@ -63,10 +75,15 @@ export default function Home({
   horrorMovies,
   romanceMovies,
   documentaries,
+  products,
 }: Props) {
-  const { loading } = useAuth();
+  const { loading, user } = useAuth();
   const showModal = useRecoilValue(modalState);
+  const subscription = useSubscription(user);
+  console.log(subscription);
   if (loading) return null;
+
+  if (!subscription) return <Plans products={products} />;
   return (
     <div className="relative h-screen bg-gradient-to-b lg:h-[140vh]">
       <Head>
