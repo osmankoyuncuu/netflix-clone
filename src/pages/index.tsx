@@ -80,7 +80,6 @@ export default function Home({
   const { loading, user } = useAuth();
   const showModal = useRecoilValue(modalState);
   const subscription = useSubscription(user);
-  console.log(subscription);
   if (loading) return null;
 
   if (!subscription) return <Plans products={products} />;
