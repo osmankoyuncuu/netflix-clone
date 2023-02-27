@@ -28,7 +28,7 @@ const Banner = ({ netflixOriginals }: Props) => {
           src={`${baseUrl}${movie?.backdrop_path || movie?.poster_path}`}
           alt="banner"
           fill
-          objectFit="cover"
+          style={{ objectFit: "cover" }}
         />
       </div>
       <h1 className="text-2xl md:text-4xl lg:text-7xl">

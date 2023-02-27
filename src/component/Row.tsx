@@ -29,7 +29,7 @@ const Row = ({ title, movies }: Props) => {
     }
   };
   return (
-    <div className="h-40 space-y-5 md:space-y-2 ">
+    <div className="h-40 space-y-5 md:space-y-2 md:h-60">
       <h2 className="w-56 cursor-pointer text-sm font-semibold text-[#e5e5e5] transition duration-200 hover:text-white md:text-2xl">
         {title}
       </h2>

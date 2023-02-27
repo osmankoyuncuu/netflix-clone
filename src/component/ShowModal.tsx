@@ -18,6 +18,7 @@ import {
   collection,
   deleteDoc,
   doc,
+  DocumentData,
   onSnapshot,
   setDoc,
 } from "firebase/firestore";
