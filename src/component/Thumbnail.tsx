@@ -13,7 +13,7 @@ const Thumbnail = ({ movie }: Props) => {
   const [currentsMovie, setCurrentMovie] = useRecoilState(movieState);
   return (
     <div
-      className="relative h-28 min-w-[180px]  cursor-pointer transition duration-200 ease-out md:h-36 md:min-w-[260px] md:hover:scale-105"
+      className="relative h-28 min-w-[180px] w-[180px] cursor-pointer transition duration-200 ease-out md:h-36 md:min-w-[260px] md:hover:scale-105"
       onClick={() => {
         setCurrentMovie(movie);
         setShowModal(true);
