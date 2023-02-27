@@ -6,12 +6,13 @@ import requests from "@/utils/request";
 import Head from "next/head";
 import { Movie } from "typings";
 import { useRecoilValue } from "recoil";
-import { modalState } from "@/atoms/modalAtom";
+import { modalState, movieState } from "@/atoms/modalAtom";
 import Modal from "@/component/ShowModal";
 import Plans from "@/component/Plans";
 import { getProducts, Product } from "@stripe/firestore-stripe-payments";
 import payments from "../lib/stripe";
 import useSubscription from "@/hooks/useSubscription";
+import useList from "@/hooks/useList";
 
 export const getServerSideProps = async () => {
   const products = await getProducts(payments, {
@@ -80,6 +81,9 @@ export default function Home({
   const { loading, user } = useAuth();
   const showModal = useRecoilValue(modalState);
   const subscription = useSubscription(user);
+  const movie = useRecoilValue(movieState);
+  const list = useList(user?.uid);
+
   if (loading) return null;
 
   if (!subscription) return <Plans products={products} />;
@@ -99,7 +103,7 @@ export default function Home({
           <Row title="Top Rated" movies={topRated} />
           <Row title="Action Thrillers" movies={actionMovies} />
           {/* My List */}
-
+          {list.length > 0 && <Row title="My List" movies={list} />}
           <Row title="Comedies" movies={comedyMovies} />
           <Row title="Scary Movies" movies={horrorMovies} />
           <Row title="Romance Movies" movies={romanceMovies} />
